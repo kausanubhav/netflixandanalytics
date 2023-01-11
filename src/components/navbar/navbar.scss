@@ -1,0 +1,85 @@
+.navbar {
+  width: 100%;
+  color: white;
+  font-size: 14px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999;
+  // Setting your Header to position: fixed decouples the navbar Element from its parent,
+  // so it does not have any background color, until you specify one.
+  // You have to manually set the color to white again.
+  //background-color: var(--main-color);
+  background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
+ 
+//   scrolled gets added to navbar if offsetY > 0
+  &.scrolled {
+    background-color: var(--main-color);
+  }
+
+  // container
+  .container {
+    padding: 0 50px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .left {
+      display: flex;
+      align-items: center;
+
+      .logo {
+        height: 45px;
+        margin-right: 40px;
+        cursor: pointer;
+        filter: brightness(1.5);
+      }
+      span {
+        margin-right: 25px;
+        cursor: pointer;
+      }
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+
+      .navbarIcon {
+        margin: 0 15px;
+        cursor: pointer;
+      }
+      span {
+        cursor: pointer;
+      }
+      .navbarImg {
+        width: 30px;
+        height: 30px;
+        border-radius: 5px;
+        object-fit: cover;
+        cursor: pointer;
+      }
+
+      .profile {
+        .options {
+          display: none;
+          background-color: var(--main-color);
+          border-radius: 5px;
+        }
+
+        span {
+          padding: 10px;
+          cursor: pointer;
+        }
+
+        &:hover {
+          .options {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+          }
+        }
+      }
+    }
+  }
+}
