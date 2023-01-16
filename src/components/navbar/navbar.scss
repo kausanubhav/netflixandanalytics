@@ -1,3 +1,4 @@
+@import "../../app.scss";
 .navbar {
   width: 100%;
   color: white;
@@ -11,8 +12,8 @@
   // You have to manually set the color to white again.
   //background-color: var(--main-color);
   background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
- 
-//   scrolled gets added to navbar if offsetY > 0
+
+  //   scrolled gets added to navbar if offsetY > 0
   &.scrolled {
     background-color: var(--main-color);
   }
@@ -30,14 +31,28 @@
       align-items: center;
 
       .logo {
-        height: 45px;
+        height: 50px;
         margin-right: 40px;
         cursor: pointer;
-        filter: brightness(1.5);
+        // filter: brightness();
+         @include mobile {
+          display: none;
+        }
       }
+
       span {
         margin-right: 25px;
         cursor: pointer;
+
+         @include tablet {
+          display: none;
+        }
+
+        &.navbarmainLinks {
+          @include tablet {
+            display: block;
+          }
+        }
       }
     }
 

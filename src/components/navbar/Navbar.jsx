@@ -1,14 +1,17 @@
 import { ArrowDropDown, Notifications, Search } from "@mui/icons-material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./navbar.scss";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../authContext/AuthContext";
+import { logout } from "../../authContext/AuthActions";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const {dispatch}=useContext(AuthContext);
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     //cleanup function
     return () => (window.onscroll = null);
   };
-  console.log(isScrolled);
   return (
     <div className={isScrolled ? "navbar scrolled" : "navbar"}>
       <div className="container">
@@ -18,11 +21,22 @@ export default function Navbar() {
             alt=""
             className="logo"
           />
-          <span>HomePage</span>
-          <span>Series</span>
-          <span>Movies</span>
-          <span>Trending </span>
-          <span>My List</span>
+          <Link to="/" className="link">
+            <span>Home</span>
+          </Link>
+
+          <Link to="/series" className="link">
+            <span className="navbarmainLinks">Series</span>
+          </Link>
+          <Link to="/movies" className="link">
+            <span className="navbarmainLinks">Movies</span>
+          </Link>
+          <Link to="/" className="link">
+            <span>Trending</span>
+          </Link>
+          <Link to="/" className="link">
+            <span>My List</span>
+          </Link>
         </div>
         <div className="right">
           <Search className="navbarIcon" />
@@ -37,7 +51,7 @@ export default function Navbar() {
             <ArrowDropDown className="icon" />
             <div className="options">
               <span>Settings</span>
-              <span>Logout</span>
+              <span onClick={() => logout(dispatch)}>Logout</span>
             </div>
           </div>
         </div>

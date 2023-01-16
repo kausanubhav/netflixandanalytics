@@ -1,44 +1,87 @@
 import { InfoOutlined, PlayArrow } from "@mui/icons-material";
 import "./featured.scss";
-export default function Featured({type}) {
+import axios from "axios";
+import { useState, useEffect } from "react";
+export default function Featured({ type, setGenre }) {
+  const [content, setContent] = useState({});
+  const [isClicked, setIsClicked] = useState(false);
+  useEffect(() => {
+    const getRandomContent = async () => {
+      try {
+        const res = await axios.get(`/movies/random?type=${type}`, {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzAxNjRhYmNlYjQ5ZjE1ZTliYjI1OCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY3MzU0NzAxNSwiZXhwIjoxNjczOTc5MDE1fQ.WTtUxdlQRAu7oxCJzUQYNgtWfnl1k1k5dHOBr6PKfto ",
+          },
+        });
+        setContent(res.data[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRandomContent();
+  }, [type]);
   return (
     <div className="featured">
       {type && (
         <div className="category">
-          <span>{type === "movie" ? "Movies" : "Series"}</span>
-          <select name="genre" id="genre">
-            <option>Genre</option>
-            <option value="adventure">Adventure</option>
-            <option value="comedy">Comedey</option>
-            <option value="crime">Crime</option>
-            <option value="fantasy">Fantasy</option>
-            <option value="historical">Historical</option>
-            <option value="horror">Horror</option>
-            <option value="romance">Romance</option>
-            <option value="sci-fi">Sci-fi</option>
+          <span>{type === "movies" ? "Movies" : "Series"}</span>
+          <select
+            name="genre"
+            id="genre"
+            onChange={(e) => setGenre(e.target.value)}
+            onClick={() => setIsClicked(true)}
+          >
+            {!isClicked && <option>Genre</option>}{" "}
+            <option value="action">Action</option>
+            <option value="comedy">Comedy</option>
             <option value="thriller">Thriller</option>
-            <option value="western">Western</option>
-            <option value="indian">Indian</option>
-            <option value="animation">Animation</option>
-            <option value="documentary">Documentary</option>
+            <option disabled value="fantasy">
+              Fantasy
+            </option>
+            <option disabled value="historical">
+              Historical
+            </option>
+            <option disabled value="horror">
+              Horror
+            </option>
+            <option disabled value="romance">
+              Romance
+            </option>
+            <option disabled value="sci-fi">
+              Sci-fi
+            </option>
+            <option disabled value="thriller">
+              Thriller
+            </option>
+            <option disabled value="western">
+              Western
+            </option>
+            <option disabled value="indian">
+              Indian
+            </option>
+            <option disabled value="animation">
+              Animation
+            </option>
+            <option disabled value="documentary">
+              Documentary
+            </option>
           </select>
         </div>
       )}
+      {/* <div className="imgContainer">
+        <img
+          src="https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt=""
+        />
+      </div> */}
       <img
-        width="100%"
-        src="https://images6.alphacoders.com/632/632756.jpg"
+        src={content.img}
         alt=""
       />
       <div className="info">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mad_Max_Fury_Road_logo.png?20211029091433"
-          alt=""
-        />
-        <span className="desc">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo
-          soluta neque nemo eum dolores error id porro fugiat quae, beatae
-          consectetur voluptate nobis ex temporibus, sed ipsam autem, est illo?
-        </span>
+        <img src={content.imgTitle} alt="" />
+        <span className="desc">{content.desc}</span>
         <div className="buttons">
           <button className="play">
             <PlayArrow />

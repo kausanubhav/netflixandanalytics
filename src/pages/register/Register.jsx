@@ -1,20 +1,33 @@
 import "./register.scss";
-import { useRef,useState } from "react";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import {Link} from 'react-router-dom'
+//TODO: Client-side Error notifications
 export default function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const emailRef=useRef();
-    const passwordRef=useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const usernameRef = useRef();
+  const navigate = useNavigate();
 
-    const handleStart=()=>{
-        setEmail(emailRef.current.value);
-
+  const handleStart = () => {
+    setEmail(emailRef.current.value);
+  };
+  const handleFinish = async (e) => {
+    e.preventDefault();
+    setPassword(passwordRef.current.value);
+    setUsername(usernameRef.current.value);
+    try {
+      await axios.post("/users/register", { username,email, password });
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
     }
-    const handleFinish=()=>{
-        setPassword(passwordRef.current.value);
-
-    }
+  };
   return (
     <div className="register">
       <div className="top">
@@ -24,7 +37,9 @@ export default function Register() {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt=""
           />
+          <Link to="/login" style={{zIndex:'9999'}}> 
           <button className="loginButton">Sign in </button>
+          </Link>
         </div>
       </div>
       <div className="container">
@@ -42,9 +57,18 @@ export default function Register() {
           </div>
         ) : (
           <form className="input">
-            <input type="password" ref={passwordRef} placeholder="Enter Password" />
+            <input
+              type="text"
+              ref={usernameRef}
+              placeholder="Enter Username"
+            />
+            <input
+              type="password"
+              ref={passwordRef}
+              placeholder="Enter Password"
+            />
             <button className="registerButton" onClick={handleFinish}>
-            Start membership
+              Start membership
             </button>
           </form>
         )}
