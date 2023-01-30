@@ -7,11 +7,16 @@ import axios from "axios"
 export default function Home({ type }) {
   const [lists, setLists] = useState([])
   const [genre, setGenre] = useState(null)
+
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  })
+
   useEffect(() => {
     const getRandomLists = async () => {
       try {
-        const res = await axios.get(
-          `api/lists${type ? "?type=" + type : ""}${genre ? "&genre=" + genre : ""}`,
+        const res = await axiosInstance.get(
+          `lists${type ? "?type=" + type : ""}${genre ? "&genre=" + genre : ""}`,
           {
             headers: {
               Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,

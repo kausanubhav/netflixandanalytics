@@ -13,10 +13,14 @@ export default function Home() {
 
   const [userStats, setUserStats] = useState([])
 
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  })
+
   useEffect(() => {
     const getStats = async () => {
       try {
-        const res = await axios.get("api/users/stats", {
+        const res = await axiosInstance.get("/users/stats", {
           headers: {
             Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
           },

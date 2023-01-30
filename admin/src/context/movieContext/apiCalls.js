@@ -16,8 +16,11 @@ import {
 //Get movies
 export const getMovies = async (dispatch) => {
   dispatch(getMoviesStart())
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  })
   try {
-    const res = await axios.get("/movies", {
+    const res = await axiosInstance.get("/movies", {
       headers: {
         Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
@@ -32,7 +35,7 @@ export const getMovies = async (dispatch) => {
 export const createMovie = async (movie, dispatch) => {
   dispatch(createMovieStart())
   try {
-    const res = await axios.post("api/movies", movie, {
+    const res = await axiosInstance.post("api/movies", movie, {
       headers: {
         Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
@@ -47,7 +50,7 @@ export const createMovie = async (movie, dispatch) => {
 export const deleteMovie = async (id, dispatch) => {
   dispatch(deleteMovieStart())
   try {
-    await axios.delete("/movies/" + id, {
+    await axiosInstance.delete("/movies/" + id, {
       headers: {
         Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
@@ -62,7 +65,7 @@ export const updateMovie = async (movie, dispatch) => {
   dispatch(updateMovieStart())
   try {
     console.log(movie.movie._id)
-    const res = await axios.put("/movies/" + movie.movie._id, movie, {
+    const res = await axiosInstance.put("/movies/" + movie.movie._id, movie, {
       headers: {
         Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },

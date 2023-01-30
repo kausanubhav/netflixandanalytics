@@ -1,16 +1,19 @@
-import { InfoOutlined, PlayArrow } from '@mui/icons-material'
-import './featured.scss'
-import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { InfoOutlined, PlayArrow } from "@mui/icons-material"
+import "./featured.scss"
+import axios from "axios"
+import { useState, useEffect } from "react"
 export default function Featured({ type, setGenre }) {
   const [content, setContent] = useState({})
   const [isClicked, setIsClicked] = useState(false)
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  })
   useEffect(() => {
     const getRandomContent = async () => {
       try {
-        const res = await axios.get(`api/movies/random?type=movies`, {
+        const res = await axiosInstance.get(`movies/random?type=movies`, {
           headers: {
-            Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('user')).token,
+            Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
           },
         })
         setContent(res.data[0])
@@ -24,7 +27,7 @@ export default function Featured({ type, setGenre }) {
     <div className="featured">
       {type && (
         <div className="category">
-          <span>{type === 'movies' ? 'Movies' : 'Series'}</span>
+          <span>{type === "movies" ? "Movies" : "Series"}</span>
           <select
             name="genre"
             id="genre"

@@ -6,12 +6,16 @@ import { Link } from "react-router-dom"
 export default function ListItem({ index, item }) {
   const [isHovered, setIsHovered] = useState(false)
   const [movie, setMovie] = useState("")
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  })
 
   useEffect(() => {
     let cancel = false
+
     const getMovie = async () => {
       try {
-        const res = await axios.get("api/movies/find/" + item, {
+        const res = await axiosInstance.get("movies/find/" + item, {
           headers: {
             Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
           },
