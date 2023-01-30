@@ -1,13 +1,13 @@
-import axios from "axios";
-import { loginFailure, loginStart, loginSucess } from "./AuthActions";
+import axios from 'axios'
+import { loginFailure, loginStart, loginSucess } from './AuthActions'
 
 export const login = async (user, dispatch) => {
-  dispatch(loginStart());
+  dispatch(loginStart())
   try {
-    const res = await axios.post("/users/login", user);
+    const res = await axios.post('api/users/login', user)
     console.log(res)
-   dispatch(loginSucess(res.data));
+    dispatch(loginSucess(res.data))
   } catch (error) {
-    dispatch(loginFailure());
+    dispatch(loginFailure())
   }
-};
+}

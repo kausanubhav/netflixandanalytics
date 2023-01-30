@@ -1,27 +1,26 @@
-import "./widgetSm.css";
-import { Visibility } from "@mui/icons-material";
-import { useState,useEffect } from "react";
-import axios from "axios";
+import "./widgetSm.css"
+import { Visibility } from "@mui/icons-material"
+import { useState, useEffect } from "react"
+import axios from "axios"
 export default function WidgetSm() {
-  const [newUsers, setNewUsers] = useState([]);
+  const [newUsers, setNewUsers] = useState([])
 
   useEffect(() => {
     const getNewUsers = async () => {
       try {
         //query new=true for 10 recent users
-        const res = await axios.get("/users?new=true", {
+        const res = await axios.get("api/users?new=true", {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzAxNjRhYmNlYjQ5ZjE1ZTliYjI1OCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY3MzU0NzAxNSwiZXhwIjoxNjczOTc5MDE1fQ.WTtUxdlQRAu7oxCJzUQYNgtWfnl1k1k5dHOBr6PKfto ",
+            Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
           },
-        });
-        setNewUsers(res.data);
+        })
+        setNewUsers(res.data)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
-    getNewUsers();
-  }, []);
+    }
+    getNewUsers()
+  }, [])
 
   return (
     <div className="widgetSm">
@@ -48,5 +47,5 @@ export default function WidgetSm() {
         ))}
       </ul>
     </div>
-  );
+  )
 }

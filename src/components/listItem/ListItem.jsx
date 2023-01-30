@@ -1,40 +1,34 @@
-import {
-  Add,
-  PlayArrow,
-  ThumbDownOutlined,
-  ThumbUpAltOutlined,
-} from "@mui/icons-material";
-import "./listItem.scss";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Add, PlayArrow, ThumbDownOutlined, ThumbUpAltOutlined } from "@mui/icons-material"
+import "./listItem.scss"
+import { useState, useEffect } from "react"
+import axios from "axios"
+import { Link } from "react-router-dom"
 export default function ListItem({ index, item }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [movie, setMovie] = useState("");
+  const [isHovered, setIsHovered] = useState(false)
+  const [movie, setMovie] = useState("")
 
   useEffect(() => {
-    let cancel = false;
+    let cancel = false
     const getMovie = async () => {
       try {
-        const res = await axios.get("/movies/find/" + item, {
+        const res = await axios.get("api/movies/find/" + item, {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzAxNjRhYmNlYjQ5ZjE1ZTliYjI1OCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY3MzU0NzAxNSwiZXhwIjoxNjczOTc5MDE1fQ.WTtUxdlQRAu7oxCJzUQYNgtWfnl1k1k5dHOBr6PKfto ",
+            Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
           },
-        });
+        })
         if (!cancel) {
-          setMovie(res.data);
+          setMovie(res.data)
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
-    getMovie();
+    }
+    getMovie()
     return () => {
-      cancel = true;
-    };
-  }, [item]);
-  const { img, trailer, limit, genre, year, duration, desc } = movie;
+      cancel = true
+    }
+  }, [item])
+  const { img, trailer, limit, genre, year, duration, desc } = movie
   return (
     <Link to="/watch" state={{ movie: movie }}>
       <div
@@ -66,5 +60,5 @@ export default function ListItem({ index, item }) {
         )}
       </div>
     </Link>
-  );
+  )
 }

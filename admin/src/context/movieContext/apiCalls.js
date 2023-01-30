@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"
 import {
   getMoviesStart,
   getMoviesFailure,
@@ -12,69 +12,64 @@ import {
   updateMovieSuccess,
   updateMovieStart,
   updateMovieFailure,
-} from "./MovieActions";
+} from "./MovieActions"
 //Get movies
-export const getMovies = async(dispatch) => {
-  dispatch(getMoviesStart());
+export const getMovies = async (dispatch) => {
+  dispatch(getMoviesStart())
   try {
     const res = await axios.get("/movies", {
       headers: {
-        Authorization:
-          "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+        Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
-    });
+    })
     dispatch(getMoviesSuccess(res.data))
   } catch (error) {
-    dispatch(getMoviesFailure());
+    dispatch(getMoviesFailure())
   }
-};
-
+}
 
 // create movies
-export const createMovie= async (movie,dispatch) => {
-  dispatch(createMovieStart());
+export const createMovie = async (movie, dispatch) => {
+  dispatch(createMovieStart())
   try {
-    const res = await axios.post("/movies", movie,{
+    const res = await axios.post("api/movies", movie, {
       headers: {
-        Authorization:
-          "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+        Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
-    });
-    dispatch(createMovieSuccess(res.data));
+    })
+    dispatch(createMovieSuccess(res.data))
   } catch (error) {
-    dispatch(createMovieFailure());
+    dispatch(createMovieFailure())
   }
-};
+}
 
 //Delete movies
-export const deleteMovie = async(id,dispatch) => {
-  dispatch(deleteMovieStart());
+export const deleteMovie = async (id, dispatch) => {
+  dispatch(deleteMovieStart())
   try {
-    await axios.delete("/movies/"+id, {
+    await axios.delete("/movies/" + id, {
       headers: {
-        Authorization:
-          "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+        Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
-    });
+    })
     dispatch(deleteMovieSuccess(id))
   } catch (error) {
-    dispatch(deleteMovieFailure());
+    dispatch(deleteMovieFailure())
   }
-};
+}
 //Update movies
-export const updateMovie= async (movie,dispatch) => {
-  dispatch(updateMovieStart());
+export const updateMovie = async (movie, dispatch) => {
+  dispatch(updateMovieStart())
   try {
-    console.log(movie.movie._id);
+    console.log(movie.movie._id)
     const res = await axios.put("/movies/" + movie.movie._id, movie, {
       headers: {
-        Authorization:
-          "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+        Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
-    });
-    console.log('updated movie',res);
-    dispatch(updateMovieSuccess(res.data));
+    })
+    console.log("updated movie", res)
+    dispatch(updateMovieSuccess(res.data))
   } catch (error) {
-    dispatch(updateMovieFailure());
+    dispatch(updateMovieFailure())
   }
-};
+}

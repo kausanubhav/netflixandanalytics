@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios"
 import {
   getListsStart,
   getListsFailure,
@@ -9,51 +9,48 @@ import {
   createListStart,
   createListSuccess,
   createListFailure,
-} from "./ListActions";
+} from "./ListActions"
 //Get list
 export const getLists = async (dispatch) => {
-  dispatch(getListsStart());
+  dispatch(getListsStart())
   try {
-    const res = await axios.get("/lists", {
+    const res = await axios.get("api/lists", {
       headers: {
-        Authorization:
-          "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+        Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
-    });
-    dispatch(getListsSuccess(res.data));
+    })
+    dispatch(getListsSuccess(res.data))
   } catch (error) {
-    dispatch(getListsFailure());
+    dispatch(getListsFailure())
   }
-};
+}
 
 //Create list
 export const createList = async (list, dispatch) => {
-  dispatch(createListStart());
+  dispatch(createListStart())
   try {
     const res = await axios.post("/lists", list, {
       headers: {
-        Authorization:
-          "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+        Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
-    });
-    dispatch(createListSuccess(res.data));
+    })
+    dispatch(createListSuccess(res.data))
   } catch (error) {
-    dispatch(createListFailure());
+    dispatch(createListFailure())
   }
-};
+}
 
 //Delete list
 export const deleteList = async (id, dispatch) => {
-  dispatch(deleteListStart());
+  dispatch(deleteListStart())
   try {
     await axios.delete("/lists/" + id, {
       headers: {
-        Authorization:
-          "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+        Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
       },
-    });
-    dispatch(deleteListSuccess(id));
+    })
+    dispatch(deleteListSuccess(id))
   } catch (error) {
-    dispatch(deleteListFailure());
+    dispatch(deleteListFailure())
   }
-};
+}
